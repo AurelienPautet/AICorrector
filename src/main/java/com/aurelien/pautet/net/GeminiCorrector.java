@@ -30,6 +30,9 @@ public class GeminiCorrector {
                 Robot robot = new Robot();
                 Thread.sleep(300); 
 
+                String cliboardContent = clipboardManager.getClipBoard();
+                Boolean NewCliboard = true;
+
                 robot.keyPress(KeyEvent.VK_CONTROL);
                 robot.keyPress(KeyEvent.VK_C);
                 robot.keyRelease(KeyEvent.VK_C);
@@ -38,6 +41,10 @@ public class GeminiCorrector {
                 Thread.sleep(300); 
 
                 String copiedText = clipboardManager.getClipBoard();
+                if (copiedText.isEmpty()) {
+                    copiedText = cliboardContent;
+                    NewCliboard = false;
+                }
 
                 System.out.println("Copied text: " + copiedText);
 
@@ -45,14 +52,16 @@ public class GeminiCorrector {
 
                 clipboardManager.setClipBoard(correctedText);
 
-                Thread.sleep(300); 
+                if (NewCliboard){
+                    Thread.sleep(300); 
+                
+                    robot.keyPress(KeyEvent.VK_CONTROL);
+                    robot.keyPress(KeyEvent.VK_V);
+                    robot.keyRelease(KeyEvent.VK_V);
+                    robot.keyRelease(KeyEvent.VK_CONTROL);
 
-                robot.keyPress(KeyEvent.VK_CONTROL);
-                robot.keyPress(KeyEvent.VK_V);
-                robot.keyRelease(KeyEvent.VK_V);
-                robot.keyRelease(KeyEvent.VK_CONTROL);
-
-                System.out.println("Pasted text.");
+                    System.out.println("Pasted text.");
+                }
                 return correctedText;
 
 

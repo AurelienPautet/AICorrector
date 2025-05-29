@@ -1,6 +1,4 @@
 package com.aurelien.pautet.net;
-import java.io.*;
-import javax.swing.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
