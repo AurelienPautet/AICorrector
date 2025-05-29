@@ -30,13 +30,12 @@ public class MainController {
     public void CorrectText(ActionEvent e) {
         StatusLabel.setText("Status : Busy");
         System.out.println("Correct button clicked!");
-        String textToCorrect = clipboardManager.getClipBoard();
-        System.out.println("Text to correct: " + textToCorrect);
+
 
         Task<String> correctionTask = new Task<>() {
             @Override
             protected String call() {
-                return GeminiCorrector.correctText(textToCorrect);
+                return GeminiCorrector.copyCorrectPaste();
             }
 
             @Override

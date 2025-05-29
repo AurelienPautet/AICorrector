@@ -2,18 +2,67 @@ package com.aurelien.pautet.net;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.awt.event.KeyEvent;
+
+import java.awt.*;
+import java.awt.datatransfer.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GeminiCorrector {
     static Dotenv dotenv = Dotenv.load();
     static String apiKey = dotenv.get("GOOGLE_API_KEY");
     private static ClipboardManager clipboardManager = new ClipboardManager();
 
+
     public static void main(String[] args) {
 
-        System.out.println("Loaded API key: " + apiKey); // Add this line
+        System.out.println("Loaded API key: " + apiKey);
         System.out.println(correctText("Ceci est un test de correction de texte. Il y a des fautews dans ce texte, comme par exemple l'orthographe de 'test' et 'fautes'."));
-      }
-    
+    }
+
+    public GeminiCorrector() {
+        System.out.println("GeminiCorrector initialized with API key: " + apiKey);
+    }
+
+    public static String copyCorrectPaste(){
+        try {
+                Robot robot = new Robot();
+                Thread.sleep(300); 
+
+                robot.keyPress(KeyEvent.VK_CONTROL);
+                robot.keyPress(KeyEvent.VK_C);
+                robot.keyRelease(KeyEvent.VK_C);
+                robot.keyRelease(KeyEvent.VK_CONTROL);
+
+                Thread.sleep(300); 
+
+                String copiedText = clipboardManager.getClipBoard();
+
+                System.out.println("Copied text: " + copiedText);
+
+                String correctedText = correctText(copiedText);
+
+                clipboardManager.setClipBoard(correctedText);
+
+                Thread.sleep(300); 
+
+                robot.keyPress(KeyEvent.VK_CONTROL);
+                robot.keyPress(KeyEvent.VK_V);
+                robot.keyRelease(KeyEvent.VK_V);
+                robot.keyRelease(KeyEvent.VK_CONTROL);
+
+                System.out.println("Pasted text.");
+                return correctedText;
+
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return "Error during copy/correct/paste: " + ex.getMessage();
+
+            }
+    }
+
     public static String correctText(String text) {
         try (Client client = Client.builder().apiKey(apiKey).build())
         {
