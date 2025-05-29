@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aurelien.pautet.net.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="254.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aurelien.pautet.net.MainController">
    <children>
-      <Button layoutX="180.0" layoutY="299.0" mnemonicParsing="false" onAction="#CorrectText" text="Correct" />
-      <Label fx:id="title_label" layoutX="1.0" layoutY="1.0" prefHeight="59.0" prefWidth="420.0" text="IA Corrector" textAlignment="CENTER">
+      <Button layoutX="39.0" layoutY="192.0" mnemonicParsing="false" onAction="#CorrectText" text="Correct" />
+      <Label fx:id="title_label" layoutX="40.0" layoutY="7.0" prefHeight="59.0" prefWidth="175.0" text="IA Corrector" textAlignment="CENTER">
          <font>
             <Font name="Calibri Bold" size="33.0" />
          </font>
       </Label>
-      <Button layoutX="44.0" layoutY="524.0" mnemonicParsing="false" onAction="#switchToSettingsScene" text="GoToSetting" />
-      <TextArea fx:id="NameTextArea" layoutX="40.0" layoutY="75.0" prefHeight="200.0" prefWidth="342.0" />
-      <Label fx:id="CorrectedTextLabel" layoutX="40.0" layoutY="356.0" prefHeight="161.0" prefWidth="342.0" text="qsdqsdqsd" />
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="360.0" layoutY="14.0" onMouseClicked="#switchToSettingsScene" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ENGRENAGE.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="133.0" layoutY="198.0" text="Shortcut : Ctr+Alt+C" />
+      <Label layoutX="40.0" layoutY="66.0" prefHeight="27.0" prefWidth="376.0" text="Copy selected text -&gt; Correct -&gt; Paste back" textOverrun="WORD_ELLIPSIS" wrapText="true" />
+      <ChoiceBox layoutX="39.0" layoutY="104.0" prefHeight="39.0" prefWidth="352.0" />
+      <Label fx:id="StatusLabel" layoutX="40.0" layoutY="156.0" text="Status : Ready" />
    </children>
 </AnchorPane>
