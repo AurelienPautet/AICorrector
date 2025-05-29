@@ -9,14 +9,29 @@ import java.awt.datatransfer.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GeminiCorrector {
-    static Dotenv dotenv = Dotenv.load();
-    static String apiKey = dotenv.get("GOOGLE_API_KEY");
-    private static ClipboardManager clipboardManager = new ClipboardManager();
+import org.checkerframework.checker.units.qual.t;
 
+public class GeminiCorrector {
+    private static ClipboardManager clipboardManager = new ClipboardManager();
+    private static boolean debug = true; // Set to true for debugging
+
+    static String apiKey;
+    static {
+        String keyFromEnv = null;
+        try {
+            keyFromEnv = Dotenv.load().get("GOOGLE_API_KEY");
+        } catch (Exception e) {
+            // Dotenv failed, will try system env
+        }
+        if (keyFromEnv != null && !keyFromEnv.isEmpty()) {
+            apiKey = keyFromEnv;
+        } else {
+            apiKey = System.getenv("GOOGLE_API_KEY");
+        }
+    }
 
     public static void main(String[] args) {
-
+        
         System.out.println("Loaded API key: " + apiKey);
         System.out.println(correctText("Ceci est un test de correction de texte. Il y a des fautews dans ce texte, comme par exemple l'orthographe de 'test' et 'fautes'."));
     }

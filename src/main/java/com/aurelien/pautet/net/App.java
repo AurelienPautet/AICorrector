@@ -35,6 +35,12 @@ public class App extends Application {
         //primaryStage.setHeight(600);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+
+        // Prevent the window from closing
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume(); // This stops the window from closing
+        });
+
         primaryStage.show();
     }
 

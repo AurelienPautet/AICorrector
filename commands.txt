@@ -1,0 +1,10 @@
+java --module-path "C:\Program Files (x86)\javafx-sdk-21.0.7\lib" --add-modules javafx.controls,javafx.fxml -jar target\AICorrectorJAVASwing-1.0-SNAPSHOT.jar                                                                                                                       
+
+mvn clean package -U  
+
+mvn clean javafx:run 
+
+& 'c:\Users\aurel\OneDrive\Bureau\AICorrectorJAVASwing\startAICorrectorJAVA.bat'                                                                                                                                                                                                                 
+
+$WshShell = New-Object -ComObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\startAICorrectorJAVA.lnk"); $Shortcut.TargetPath = "c:\Users\aurel\OneDrive\Bureau\AICorrectorJAVASwing\startAICorrectorJAVA.bat"; $Shortcut.WorkingDirectory = "c:\Users\aurel\OneDrive\Bureau\AICorrectorJAVASwing"; $Shortcut.Save()
+
