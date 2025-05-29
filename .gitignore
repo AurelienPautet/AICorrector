@@ -1,0 +1,31 @@
+# Maven target directory
+/target/
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA files
+*.iml
+.idea/
+out/
+
+# VS Code files
+.vscode/
+.mvn/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# JavaFX build artifacts
+/build/
+
+# Package files
+*.jar
+*.war
+*.ear
