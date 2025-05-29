@@ -17,6 +17,8 @@ public class MainController {
     private Scene scene;
     private Parent root = null;
 
+    private ClipboardManager clipboardManager = new ClipboardManager();
+
     @FXML
     TextArea NameTextArea;
 

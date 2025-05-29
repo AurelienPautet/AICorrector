@@ -6,6 +6,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class GeminiCorrector {
     static Dotenv dotenv = Dotenv.load();
     static String apiKey = dotenv.get("GOOGLE_API_KEY");
+    private static ClipboardManager clipboardManager = new ClipboardManager();
+
     public static void main(String[] args) {
 
         System.out.println("Loaded API key: " + apiKey); // Add this line
@@ -17,7 +19,9 @@ public class GeminiCorrector {
         {
             String prompt = "Je vais te donner un texte: \n" +
                     "Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse \n" +
-                    "Ta réponse sera UNIQUEMENT le texte d'entrée corriger\n" +
+                    "Ne modifie pas les noms propres \n" +
+                    "TU NE RESUMERAS RIEN, gardes le texte dans sont intégralité\n" +
+                    "Ta réponse sera UNIQUEMENT le texte d'entrée corrigé\n" +
                     "Texte: \n" + text;
 
             GenerateContentResponse response =
@@ -25,6 +29,9 @@ public class GeminiCorrector {
                     "gemini-2.5-flash-preview-05-20",
                     prompt,
                     null);
+
+            System.out.println("Response: " + response.text());
+            clipboardManager.setClipBoard(response.text()); // Assuming clipboardManager is defined somewhere in your code
 
             return response.text();
         }
