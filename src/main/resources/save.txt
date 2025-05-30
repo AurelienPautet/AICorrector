@@ -1,0 +1,4 @@
+Correction sans reformulation
+Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse
+Correction avec reformulation
+Corrige toute les fautes, et reformule légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer).

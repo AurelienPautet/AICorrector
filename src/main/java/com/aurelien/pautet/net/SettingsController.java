@@ -20,17 +20,22 @@ public class SettingsController {
     public void switchToMainScene(MouseEvent event) {
         System.out.println("Switching to main scene...");
         try {
-            root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            root = loader.load();
+            MainController mainController = loader.getController();
+            if (mainController != null) {
+                mainController.addOptions(); // Refresh options only, not initialize()
+            }
             primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
             primaryStage.setScene(scene);
             primaryStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
     
     
 

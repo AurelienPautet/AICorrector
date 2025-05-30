@@ -1,5 +1,6 @@
 package com.aurelien.pautet.net;
 
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
 import javafx.event.EventHandler;
@@ -13,8 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.concurrent.Task;
-import javafx.application.Platform;
 
 
 public class MainController {
@@ -22,37 +21,51 @@ public class MainController {
     private Scene scene;
     private Parent root = null;
 
-    private ClipboardManager clipboardManager = new ClipboardManager();
-
+    GeminiCorrector geminiCorrector = new GeminiCorrector(this);
+    CustomHotkeyListener customHotkeyListener = new CustomHotkeyListener();
+    ClipboardManager clipboardManager = new ClipboardManager();
+    TextSaveManager textSaveManager = new TextSaveManager();
     @FXML
     private Label StatusLabel; 
-    
-    public void CorrectText(ActionEvent e) {
-        StatusLabel.setText("Status : Busy");
-        System.out.println("Correct button clicked!");
 
+    @FXML
+    private ChoiceBox<String> PromptChoiceBox;
 
-        Task<String> correctionTask = new Task<>() {
-            @Override
-            protected String call() {
-                return GeminiCorrector.copyCorrectPaste();
-            }
-
-            @Override
-            protected void succeeded() {
-                String correctedText = getValue();
-                System.out.println("Corrected text: " + correctedText);
-                Platform.runLater(() -> StatusLabel.setText("Status : Ready"));
-            }
-
-            @Override
-            protected void failed() {
-                Platform.runLater(() -> StatusLabel.setText("Status : Error"));
-            }
-        };
-
-        new Thread(correctionTask).start();
+    public void changeStatusLabel(String text) {
+        StatusLabel.setText("Status : " + text);
+        System.out.println("Status changed to: " + text);
     }
+
+    public String getSelectedPrompt() {
+        String selectedPrompt = PromptChoiceBox.getSelectionModel().getSelectedItem();
+        if (selectedPrompt == null) {
+            System.out.println("No prompt selected.");
+            return "";
+        }
+        System.out.println("Selected prompt: " + selectedPrompt);
+        return selectedPrompt;
+    }
+
+    public void CorrectText(ActionEvent e) {
+        System.out.println("Correct button clicked!");
+        GeminiCorrector.launchCorrector();
+    }
+
+    public void addOptions() {
+        PromptChoiceBox.getItems().clear();
+        java.util.List<String> keys = new java.util.ArrayList<>(TextSaveManager.textMap.keySet());
+        java.util.Collections.reverse(keys);
+        PromptChoiceBox.getItems().addAll(keys);
+        if (!keys.isEmpty()) {
+            PromptChoiceBox.getSelectionModel().selectFirst();
+        }
+    }
+
+    @FXML
+    public void initialize() {
+        addOptions();
+    }
+
 
 
 /*     public void Send(ActionEvent e){

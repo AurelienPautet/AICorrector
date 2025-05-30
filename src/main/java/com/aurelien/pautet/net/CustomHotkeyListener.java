@@ -5,8 +5,8 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-public class CustomHotkeyListener implements NativeKeyListener {
 
+public class CustomHotkeyListener implements NativeKeyListener {
 
     public CustomHotkeyListener() {
         // Constructor can be used for initialization if needed
@@ -26,8 +26,8 @@ public class CustomHotkeyListener implements NativeKeyListener {
             (e.getModifiers() & NativeKeyEvent.CTRL_MASK) != 0 &&
             (e.getModifiers() & NativeKeyEvent.ALT_MASK) != 0) {
             System.out.println("Ctrl+Alt+C pressed!");
-            GeminiCorrector.copyCorrectPaste();
-            // Place your copy/paste logic here
+            GeminiCorrector.launchCorrector();
+
         }
     }
 

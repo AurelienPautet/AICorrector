@@ -5,15 +5,19 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.event.KeyEvent;
 
 import java.awt.*;
-import java.awt.datatransfer.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.checkerframework.checker.units.qual.t;
+
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 public class GeminiCorrector {
     private static ClipboardManager clipboardManager = new ClipboardManager();
     private static boolean debug = true; // Set to true for debugging
+
+    private static MainController mainControl;
+
+    private static TextSaveManager textSaveManager = new TextSaveManager();
 
     static String apiKey;
     static {
@@ -30,13 +34,15 @@ public class GeminiCorrector {
         }
     }
 
+
+
     public static void main(String[] args) {
         
         System.out.println("Loaded API key: " + apiKey);
-        System.out.println(correctText("Ceci est un test de correction de texte. Il y a des fautews dans ce texte, comme par exemple l'orthographe de 'test' et 'fautes'."));
     }
 
-    public GeminiCorrector() {
+    public GeminiCorrector(MainController mainController) {
+        this.mainControl = mainController;
         System.out.println("GeminiCorrector initialized with API key: " + apiKey);
     }
 
@@ -62,8 +68,9 @@ public class GeminiCorrector {
                 }
 
                 System.out.println("Copied text: " + copiedText);
-
-                String correctedText = correctText(copiedText);
+                String directive = TextSaveManager.textMap.get(mainControl.getSelectedPrompt());
+                
+                String correctedText = correctText(copiedText, directive);
 
                 clipboardManager.setClipBoard(correctedText);
 
@@ -87,16 +94,39 @@ public class GeminiCorrector {
             }
     }
 
-    public static String correctText(String text) {
+    public static void launchCorrector(){
+        Task<String> correctionTask = new Task<>() {
+            @Override
+            protected String call() {
+                Platform.runLater(() -> mainControl.changeStatusLabel("Busy"));
+                return GeminiCorrector.copyCorrectPaste();
+            }
+
+            @Override
+            protected void succeeded() {
+                String correctedText = getValue();
+                System.out.println("Corrected text: " + correctedText);
+                Platform.runLater(() -> mainControl.changeStatusLabel("Ready"));
+            }
+
+            @Override
+            protected void failed() {
+                Platform.runLater(() -> mainControl.changeStatusLabel("Error"));
+            }
+        };
+        new Thread(correctionTask).start();
+    }
+
+    public static String correctText(String text,String directive) {
         try (Client client = Client.builder().apiKey(apiKey).build())
         {
             String prompt = "Je vais te donner un texte: \n" +
-                    "Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse \n" +
+                    directive + "\n" +
                     "Ne modifie pas les noms propres \n" +
                     "TU NE RESUMERAS RIEN, gardes le texte dans sont intégralité\n" +
                     "Ta réponse sera UNIQUEMENT le texte d'entrée corrigé\n" +
                     "Texte: \n" + text;
-
+            System.out.println("Prompt: " + prompt);
             GenerateContentResponse response =
                 client.models.generateContent(
                     "gemini-2.5-flash-preview-05-20",

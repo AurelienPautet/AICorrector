@@ -15,8 +15,12 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // Initialize the custom hotkey listener
-        customHotkeyListener = new CustomHotkeyListener();
+        TextSaveManager textSaveManager = new TextSaveManager();
+        textSaveManager.createFile();
+        textSaveManager.readFile();
+        //textSaveManager.writeFile();
+        //textSaveManager.readFile();
+
         
         Parent root = null;
         try {
@@ -24,7 +28,6 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading FXML file: " + e.getMessage());
-            // Optionally, show an error dialog or exit
         }
         Scene scene = new Scene(root, Color.BLACK);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
@@ -36,9 +39,8 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
 
-        // Prevent the window from closing
         primaryStage.setOnCloseRequest(event -> {
-            event.consume(); // This stops the window from closing
+           // event.consume(); 
         });
 
         primaryStage.show();
@@ -46,11 +48,9 @@ public class App extends Application {
 
     @Override
     public void stop() {
-        // Unregister the native hook on application exit
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (Exception e) {
-            // Ignore if not registered or already unregistered
         }
     }
 
