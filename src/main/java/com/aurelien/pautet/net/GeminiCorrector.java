@@ -59,7 +59,7 @@ public class GeminiCorrector {
                 robot.keyRelease(KeyEvent.VK_C);
                 robot.keyRelease(KeyEvent.VK_CONTROL);
 
-                Thread.sleep(300); 
+                Thread.sleep(150); 
 
                 String copiedText = clipboardManager.getClipBoard();
                 if (copiedText.isEmpty()) {
@@ -75,7 +75,7 @@ public class GeminiCorrector {
                 clipboardManager.setClipBoard(correctedText);
 
                 if (NewCliboard){
-                    Thread.sleep(300); 
+                    Thread.sleep(150); 
                 
                     robot.keyPress(KeyEvent.VK_CONTROL);
                     robot.keyPress(KeyEvent.VK_V);
