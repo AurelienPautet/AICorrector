@@ -1,4 +1,12 @@
+Mail formel
+Transfrome le texte en un mail professionnel, en corrigeant les fautes et en reformulant légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer). Ajoute les formules de politesse appropriées en début et fin de mail sachant que mon nom (celui de l'expediteur) est PAUTET Aurélien. N'utilise pas le mot courriel mais mail. N'ajoute pas Madame/Monsieur.
+Traduction en anglais
+Traduit en anglais
 Correction sans reformulation
-Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse
+Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse, et sans résumer le texte.
+Corrige amis
+Ne supprime pas les abréviation ni le languages 'jeunes', ne reformule pas, corrige juste les fautes.
 Correction avec reformulation
 Corrige toute les fautes, et reformule légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer).
+Ajout d'emoji
+Ajoute des emojis 

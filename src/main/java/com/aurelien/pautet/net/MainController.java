@@ -22,7 +22,6 @@ public class MainController {
     private Parent root = null;
 
     GeminiCorrector geminiCorrector = new GeminiCorrector(this);
-    CustomHotkeyListener customHotkeyListener = new CustomHotkeyListener();
     ClipboardManager clipboardManager = new ClipboardManager();
     TextSaveManager textSaveManager = new TextSaveManager();
     @FXML

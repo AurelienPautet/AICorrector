@@ -10,20 +10,21 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 
 public class App extends Application {
 
-    CustomHotkeyListener customHotkeyListener;
     private java.awt.TrayIcon trayIcon;
 
     @Override
     public void start(Stage primaryStage) {
         //ta grand mère la ligne de code, pourqoi t'est true de base toi
-        javafx.application.Platform.setImplicitExit(false); 
+        CustomHotkeyListener customHotkeyListener = new CustomHotkeyListener();
 
+        javafx.application.Platform.setImplicitExit(false); 
         TextSaveManager textSaveManager = new TextSaveManager();
         textSaveManager.createFile();
+        textSaveManager.readFile();
         if (TextSaveManager.textMap.isEmpty()) {
-            textSaveManager.addText("Correction sans reformulation", "Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse\r\n" + //
-                                                                        "");
+            textSaveManager.addText("Correction sans reformulation", "Corrige toute les fautes, SANS REFORMULER sauf si la phrases est gramaticalement fausse, et sans résumer le texte.");
             textSaveManager.addText("Correction avec reformulation", "Corrige toute les fautes, et reformule légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer).");
+            textSaveManager.addText("Mail", "Transfrome le texte en un mail professionnel, en corrigeant les fautes et en reformulant légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer). Ajoute les formules de politesse appropriées en début et fin de mail sachant que mon nom (celui de l'expediteur) est PAUTET Aurélien.");
         }
         textSaveManager.writeFile();
         textSaveManager.readFile();

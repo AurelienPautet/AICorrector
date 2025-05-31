@@ -9,7 +9,6 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 public class CustomHotkeyListener implements NativeKeyListener {
 
     public CustomHotkeyListener() {
-        // Constructor can be used for initialization if needed
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException e) {

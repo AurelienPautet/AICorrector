@@ -2,8 +2,6 @@ package com.aurelien.pautet.net;
 
 import java.io.IOException;
 
-import javafx.scene.input.Clipboard;
-
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 

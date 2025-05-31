@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileWriter;   
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +56,10 @@ public class TextSaveManager {
         textMap.put(key, value);
         writeFile();
     }
+
+    public void ereaseText() {
+        textMap.clear();
+    }   
 
     public void removeText(String key) {
         if (textMap.containsKey(key)) {

@@ -1,6 +1,10 @@
 package com.aurelien.pautet.net;
 import com.google.genai.Client;
+import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Content;
+import com.google.genai.types.Part;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.event.KeyEvent;
 
@@ -13,11 +17,8 @@ import javafx.concurrent.Task;
 
 public class GeminiCorrector {
     private static ClipboardManager clipboardManager = new ClipboardManager();
-    private static boolean debug = true; // Set to true for debugging
 
     private static MainController mainControl;
-
-    private static TextSaveManager textSaveManager = new TextSaveManager();
 
     static String apiKey;
     static {
@@ -42,7 +43,7 @@ public class GeminiCorrector {
     }
 
     public GeminiCorrector(MainController mainController) {
-        this.mainControl = mainController;
+        GeminiCorrector.mainControl = mainController;
         System.out.println("GeminiCorrector initialized with API key: " + apiKey);
     }
 
@@ -120,21 +121,29 @@ public class GeminiCorrector {
     public static String correctText(String text,String directive) {
         try (Client client = Client.builder().apiKey(apiKey).build())
         {
-            String prompt = "Je vais te donner un texte: \n" +
+            String prompt = 
+                    "Tu es un correcteur de texte , en effet je vais te donner un texte: \n" +
                     directive + "\n" +
                     "Ne modifie pas les noms propres \n" +
                     "TU NE RESUMERAS RIEN, gardes le texte dans sont intégralité\n" +
-                    "Ta réponse sera UNIQUEMENT le texte d'entrée corrigé\n" +
-                    "Texte: \n" + text;
+                    "Ta réponse sera UNIQUEMENT le texte d'entrée corrigé\n";
             System.out.println("Prompt: " + prompt);
-            GenerateContentResponse response =
+
+            Content systemInstruction = Content.fromParts(Part.fromText(prompt));
+
+        GenerateContentConfig config = GenerateContentConfig.builder()
+        .systemInstruction(systemInstruction)
+            .build();
+
+        GenerateContentResponse response =
                 client.models.generateContent(
-                    "gemini-2.5-flash-preview-05-20",
-                    prompt,
-                    null);
+                        "gemini-2.5-flash-preview-05-20",
+                        text,
+                        config
+                );
 
             System.out.println("Response: " + response.text());
-            clipboardManager.setClipBoard(response.text()); // Assuming clipboardManager is defined somewhere in your code
+            clipboardManager.setClipBoard(response.text()); 
 
             return response.text();
         }
