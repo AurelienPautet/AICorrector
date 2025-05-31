@@ -10,3 +10,5 @@ Correction avec reformulation
 Corrige toute les fautes, et reformule légèrement le texte pour améliorer la construction des phrases (sans pour autant le résumer).
 Ajout d'emoji
 Ajoute des emojis 
+Remove all english comment 
+Remove all english comments but do not touch the code

@@ -22,13 +22,11 @@ public class ClipboardManager {
     public static void main(String[] args) {
         ClipboardManager clipboardManager = new ClipboardManager();
 
-        // Get text from clipboard
         String clipboardText = clipboardManager.getClipBoard();
         System.out.println("Clipboard text: " + clipboardText);
 
-        // Set text to clipboard
-        clipboardManager.setClipBoard("Hello, Clipboard!");
-        System.out.println("Text set to clipboard.");
+        clipboardManager.setClipBoard("Ca marche ou bien ?");
+        System.out.println("AHH dac");
     }
 
 }

@@ -72,7 +72,7 @@ public class SettingsController {
 
     public void add_new_card_button(){
         Button addButton = new Button("Add New Prompt");
-        addButton.setPrefWidth(250); // Match the width of the first input
+        addButton.setPrefWidth(250);
         HBox buttonBox = new HBox(addButton);
         buttonBox.setPadding(new Insets(10, 10, 10, 10));
         addButton.setOnAction(event -> {
@@ -86,7 +86,7 @@ public class SettingsController {
     }
 
     public void savePrompts(MouseEvent event) {
-        textSaveManager.ereaseText(); // Clear existing prompts before saving new ones
+        textSaveManager.ereaseText();
         for (Node node : PromptsVBox.getChildren()) {
                 Pane cardPane = (Pane) node;
                 if (cardPane.getChildren().get(0) instanceof HBox) {
