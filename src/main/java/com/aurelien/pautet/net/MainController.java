@@ -88,7 +88,6 @@ public class MainController {
             return; // Exit if there's an error
         }     }*/
     
-        // Here you can add the logic to handle the send action
 
 
 public void switchToSettingsScene(MouseEvent event) {

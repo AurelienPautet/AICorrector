@@ -26,7 +26,6 @@ public class GeminiCorrector {
         try {
             keyFromEnv = Dotenv.load().get("GOOGLE_API_KEY");
         } catch (Exception e) {
-            // Dotenv failed, will try system env
         }
         if (keyFromEnv != null && !keyFromEnv.isEmpty()) {
             apiKey = keyFromEnv;
@@ -142,6 +141,13 @@ public class GeminiCorrector {
                         config
                 );
 
+
+/*                 GenerateContentResponse response = client.models.generateContent(
+                        "gemini-2.0-flash-lite",
+                        text,
+                        config
+                );
+ */
             System.out.println("Response: " + response.text());
             clipboardManager.setClipBoard(response.text()); 
 
