@@ -118,6 +118,7 @@ public class GeminiCorrector {
     }
 
     public static String correctText(String text,String directive) {
+        System.out.println(TextSaveManager.ModelName);
         try (Client client = Client.builder().apiKey(apiKey).build())
         {
             String prompt = 
@@ -136,21 +137,13 @@ public class GeminiCorrector {
 
         GenerateContentResponse response =
                 client.models.generateContent(
-                        "gemini-2.5-flash-preview-05-20",
+                        TextSaveManager.ModelName,
                         text,
                         config
                 );
 
-
-/*                 GenerateContentResponse response = client.models.generateContent(
-                        "gemini-2.0-flash-lite",
-                        text,
-                        config
-                );
- */
             System.out.println("Response: " + response.text());
             clipboardManager.setClipBoard(response.text()); 
-
             return response.text();
         }
         catch (Exception e) {

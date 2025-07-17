@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,7 +27,7 @@
             <Image url="@CROSS.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="PromptsScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="36.0" layoutY="114.0" prefHeight="200.0" prefWidth="987.0" vbarPolicy="ALWAYS">
+      <ScrollPane fx:id="PromptsScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="36.0" layoutY="161.0" prefHeight="200.0" prefWidth="987.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                <children>
@@ -34,5 +36,9 @@
             </AnchorPane>
         </content>
       </ScrollPane>
+      <TextField fx:id="ModelTextField" layoutX="154.0" layoutY="97.0" prefHeight="39.0" prefWidth="394.0" />
+      <Label layoutX="36.0" layoutY="103.0" text="Model Name : " />
+      <Label layoutX="556.0" layoutY="103.0" text="see : " />
+      <Hyperlink layoutX="597.0" layoutY="99.0" text="https://ai.google.dev/gemini-api/docs/models?hl=fr" />
    </children>
 </AnchorPane>

@@ -34,6 +34,9 @@ public class SettingsController {
     @FXML
     private VBox PromptsVBox;
 
+    @FXML
+    private TextField ModelTextField;
+
     private void create_prompt_card(String promptName ,  String promptText) {
         Pane cardPane = new Pane();
         cardPane.setMinHeight(50);
@@ -100,6 +103,7 @@ public class SettingsController {
 
             
         }
+        textSaveManager.updateModelName(ModelTextField.getText());
         textSaveManager.readFile();
         switchToMainScene(event);
     }
@@ -125,6 +129,7 @@ public class SettingsController {
     
     @FXML
     public void initialize() {
+        ModelTextField.setText(TextSaveManager.ModelName);
         for (String key : TextSaveManager.textMap.keySet()) {
             String promptText = TextSaveManager.textMap.get(key);
             create_prompt_card(key, promptText);

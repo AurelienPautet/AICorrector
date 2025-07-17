@@ -13,6 +13,7 @@ import java.util.Map;
 public class TextSaveManager {
 
   public static Map<String, String> textMap = new HashMap<>();
+  public static String ModelName = "";
   private static final String FILE_PATH = System.getProperty("user.home") + "/Documents/AICorrectorSave/save.txt";
   public static void main(String[] args) {
     TextSaveManager manager = new TextSaveManager();
@@ -32,11 +33,15 @@ public class TextSaveManager {
       
       while (myReader.hasNextLine()) {
       String data = myReader.nextLine();
+      if (i == 0 ){}
+      else {if (i ==1) {
+        ModelName = data;
+      }else{
       if (i % 2 == 0) {
         Keys.add(data);
       } else {
         Values.add(data);
-      }
+      }}}
       i++;
       }
       for (int j = 0; j < Keys.size(); j++) {
@@ -53,6 +58,11 @@ public class TextSaveManager {
 
   public void addText(String key, String value) {
     textMap.put(key, value);
+    writeFile();
+  }
+
+  public void updateModelName(String name){
+    ModelName = name;
     writeFile();
   }
 
@@ -88,6 +98,8 @@ public class TextSaveManager {
   public void writeFile() {
   try {
     FileWriter myWriter = new FileWriter(FILE_PATH);
+    myWriter.write("ModelName :" + "\n");
+    myWriter.write(ModelName + "\n");
     for (Map.Entry<String, String> entry : textMap.entrySet()) {
       myWriter.write(entry.getKey() + "\n");
       myWriter.write(entry.getValue() + "\n");
