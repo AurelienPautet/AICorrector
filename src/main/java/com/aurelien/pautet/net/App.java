@@ -11,6 +11,35 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 public class App extends Application {
 
     private java.awt.TrayIcon trayIcon;
+        private Stage primaryStage; 
+    private Image defaultIcon;
+    private Image busyIcon;
+    private Image errorIcon;
+
+
+    public void setAppIconBusy(String state) {
+        javafx.application.Platform.runLater(() -> {
+            if (state.equals("busy")) {
+                primaryStage.getIcons().set(0, busyIcon);
+                if (trayIcon != null) {
+                    java.awt.Image awtBusyIcon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/logo_busy.png"));
+                    trayIcon.setImage(awtBusyIcon);
+                }
+            } else if(state.equals("default")) {
+                primaryStage.getIcons().set(0, defaultIcon);
+                if (trayIcon != null) {
+                    java.awt.Image awtDefaultIcon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/logo.png"));
+                    trayIcon.setImage(awtDefaultIcon);
+                }
+            }else if (state.equals("error")) {
+                primaryStage.getIcons().set(0, errorIcon);
+                if (trayIcon != null) {
+                    java.awt.Image awtErrorIcon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/logo_error.png"));
+                    trayIcon.setImage(awtErrorIcon);
+                }
+            }
+        });
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,16 +63,23 @@ public class App extends Application {
 
         
         Parent root = null;
+        MainController mainController = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            root = loader.load();
+            mainController = loader.getController();
+            mainController.setAppInstance(this);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading FXML file: " + e.getMessage());
         }
         Scene scene = new Scene(root, Color.BLACK);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-        Image icon = new Image(getClass().getResourceAsStream("/logo1.png"));
-        primaryStage.getIcons().add(icon);
+ this.primaryStage = primaryStage; 
+        defaultIcon = new Image(getClass().getResourceAsStream("/logo.png"));
+        busyIcon = new Image(getClass().getResourceAsStream("/logo_busy.png"));
+        errorIcon = new Image(getClass().getResourceAsStream("/logo_error.png"));
+        primaryStage.getIcons().add(defaultIcon);
         primaryStage.setTitle("Ai Corrector");
         //primaryStage.setWidth(420);
         //primaryStage.setHeight(600);
@@ -56,7 +92,7 @@ public class App extends Application {
                 if (java.awt.SystemTray.isSupported()) {
                     java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
                     if (trayIcon == null) {
-                        java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/logo1.png"));
+                        java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/logo.png"));
                         trayIcon = new java.awt.TrayIcon(image, "Ai Corrector");
                         trayIcon.setImageAutoSize(true);
                         trayIcon.setPopupMenu(new java.awt.PopupMenu()); 

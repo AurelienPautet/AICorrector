@@ -17,6 +17,7 @@ import javafx.concurrent.Task;
 
 public class GeminiCorrector {
     private static ClipboardManager clipboardManager = new ClipboardManager();
+    public static App appInstance; 
 
     private static MainController mainControl;
 
@@ -41,8 +42,10 @@ public class GeminiCorrector {
         System.out.println("Loaded API key: " + apiKey);
     }
 
-    public GeminiCorrector(MainController mainController) {
+    public GeminiCorrector(MainController mainController, App appInstance) {
         GeminiCorrector.mainControl = mainController;
+            GeminiCorrector.appInstance = appInstance;
+
         System.out.println("GeminiCorrector initialized with API key: " + apiKey);
     }
 
@@ -98,7 +101,7 @@ public class GeminiCorrector {
         Task<String> correctionTask = new Task<>() {
             @Override
             protected String call() {
-                Platform.runLater(() -> mainControl.changeStatusLabel("Busy"));
+                Platform.runLater(() -> {mainControl.changeStatusLabel("Busy");appInstance.setAppIconBusy("busy");});
                 return GeminiCorrector.copyCorrectPaste();
             }
 
@@ -106,12 +109,12 @@ public class GeminiCorrector {
             protected void succeeded() {
                 String correctedText = getValue();
                 System.out.println("Corrected text: " + correctedText);
-                Platform.runLater(() -> mainControl.changeStatusLabel("Ready"));
+                Platform.runLater(() -> {mainControl.changeStatusLabel("Ready");appInstance.setAppIconBusy("default");});
             }
 
             @Override
             protected void failed() {
-                Platform.runLater(() -> mainControl.changeStatusLabel("Error"));
+                Platform.runLater(() -> {mainControl.changeStatusLabel("Error");appInstance.setAppIconBusy("error");});
             }
         };
         new Thread(correctionTask).start();

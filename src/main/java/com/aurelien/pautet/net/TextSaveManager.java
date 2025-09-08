@@ -87,7 +87,7 @@ public class TextSaveManager {
     if (myObj.createNewFile()) {
       System.out.println("File created: " + myObj.getName());
     } else {
-      System.out.println("File already exists.");
+      System.out.println("File already exists. at"+ FILE_PATH);
     }
   } catch (IOException e) {
     System.out.println("An error occurred.");

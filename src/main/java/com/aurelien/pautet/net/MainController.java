@@ -21,7 +21,7 @@ public class MainController {
     private Scene scene;
     private Parent root = null;
 
-    GeminiCorrector geminiCorrector = new GeminiCorrector(this);
+    GeminiCorrector geminiCorrector;
     ClipboardManager clipboardManager = new ClipboardManager();
     TextSaveManager textSaveManager = new TextSaveManager();
     @FXML
@@ -29,6 +29,13 @@ public class MainController {
 
     @FXML
     private ChoiceBox<String> PromptChoiceBox;
+
+    private App appInstance;
+
+    public void setAppInstance(App appInstance) {
+    this.appInstance = appInstance;
+    geminiCorrector = new GeminiCorrector(this, appInstance);
+    }
 
     public void changeStatusLabel(String text) {
         StatusLabel.setText("Status : " + text);
