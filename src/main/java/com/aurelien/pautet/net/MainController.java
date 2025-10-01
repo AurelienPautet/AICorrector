@@ -20,10 +20,9 @@ public class MainController {
     private Stage primaryStage;
     private Scene scene;
     private Parent root = null;
+    private static Scene mainSceneCache = null; // Add this
 
     GeminiCorrector geminiCorrector;
-    ClipboardManager clipboardManager = new ClipboardManager();
-    TextSaveManager textSaveManager = new TextSaveManager();
     @FXML
     private Label StatusLabel; 
 
@@ -33,8 +32,16 @@ public class MainController {
     private App appInstance;
 
     public void setAppInstance(App appInstance) {
-    this.appInstance = appInstance;
-    geminiCorrector = new GeminiCorrector(this, appInstance);
+        this.appInstance = appInstance;
+        geminiCorrector = new GeminiCorrector(this, appInstance);
+    }
+    
+    public static void setMainSceneCache(Scene scene) {
+        mainSceneCache = scene;
+    }
+    
+    public static Scene getMainSceneCache() {
+        return mainSceneCache;
     }
 
     public void changeStatusLabel(String text) {
@@ -62,8 +69,9 @@ public class MainController {
         java.util.List<String> keys = new java.util.ArrayList<>(TextSaveManager.textMap.keySet());
         java.util.Collections.reverse(keys);
         PromptChoiceBox.getItems().addAll(keys);
+        PromptChoiceBox.getSelectionModel().clearSelection();
         if (!keys.isEmpty()) {
-            PromptChoiceBox.getSelectionModel().selectFirst();
+            PromptChoiceBox.getSelectionModel().select(0);
         }
     }
 
@@ -100,6 +108,10 @@ public class MainController {
 public void switchToSettingsScene(MouseEvent event) {
     System.out.println("Switching to settings scene...");
     try {
+        if (mainSceneCache == null) {
+            mainSceneCache = ((Node) event.getSource()).getScene();
+        }
+        
         root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

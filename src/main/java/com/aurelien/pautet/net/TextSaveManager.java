@@ -29,7 +29,7 @@ public class TextSaveManager {
       Scanner myReader = new Scanner(myObj);
       ArrayList<String> Keys = new ArrayList<>();
       ArrayList<String> Values = new ArrayList<>();
-      Integer i = 0;
+      int i = 0;
       
       while (myReader.hasNextLine()) {
       String data = myReader.nextLine();

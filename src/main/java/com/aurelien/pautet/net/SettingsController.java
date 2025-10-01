@@ -111,17 +111,11 @@ public class SettingsController {
     public void switchToMainScene(MouseEvent event) {
         System.out.println("Switching to main scene...");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
-            root = loader.load();
-            MainController mainController = loader.getController();
-            if (mainController != null) {
-                mainController.addOptions();
-            }
             primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-            primaryStage.setScene(scene);
+            Scene mainScene = MainController.getMainSceneCache();
+            primaryStage.setScene(mainScene);
             primaryStage.show();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -72,7 +72,8 @@ public class GeminiCorrector {
 
                 System.out.println("Copied text: " + copiedText);
                 String directive = TextSaveManager.textMap.get(mainControl.getSelectedPrompt());
-                
+                System.out.println("directive text: " + directive);
+
                 String correctedText = correctText(copiedText, directive);
 
                 clipboardManager.setClipBoard(correctedText);
