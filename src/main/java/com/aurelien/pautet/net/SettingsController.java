@@ -117,6 +117,8 @@ public class SettingsController {
         try {
             primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene mainScene = MainController.getMainSceneCache();
+            MainController controller = MainController.getMainControllerInstance();
+            controller.addOptions();
             primaryStage.setScene(mainScene);
             primaryStage.show();
 

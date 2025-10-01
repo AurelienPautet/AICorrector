@@ -15,16 +15,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
-
 public class MainController {
     private Stage primaryStage;
     private Scene scene;
     private Parent root = null;
     private static Scene mainSceneCache = null; // Add this
+    private static MainController mainControllerInstance = null;
 
     GeminiCorrector geminiCorrector;
     @FXML
-    private Label StatusLabel; 
+    private Label StatusLabel;
 
     @FXML
     private ChoiceBox<String> PromptChoiceBox;
@@ -35,13 +35,21 @@ public class MainController {
         this.appInstance = appInstance;
         geminiCorrector = new GeminiCorrector(this, appInstance);
     }
-    
+
     public static void setMainSceneCache(Scene scene) {
         mainSceneCache = scene;
     }
-    
+
     public static Scene getMainSceneCache() {
         return mainSceneCache;
+    }
+
+    public static void setMainControllerInstance(MainController controller) {
+        mainControllerInstance = controller;
+    }
+
+    public static MainController getMainControllerInstance() {
+        return mainControllerInstance;
     }
 
     public void changeStatusLabel(String text) {
@@ -77,50 +85,50 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        setMainControllerInstance(this);
         addOptions();
     }
 
+    /*
+     * public void Send(ActionEvent e){
+     * System.out.println("Send button clicked!");
+     * String name = NameTextArea.getText();
+     * System.out.println("Name entered: " + name);
+     * 
+     * FXMLLoader loader = new FXMLLoader(getClass().getResource("/settings.fxml"));
+     * try {
+     * root = loader.load();
+     * SettingsController settingsController = loader.getController();
+     * settingsController.displayName(name);
+     * primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+     * scene = new Scene(root);
+     * scene.getStylesheets().add(getClass().getResource("/style.css").
+     * toExternalForm());
+     * primaryStage.setScene(scene);
+     * primaryStage.show();
+     * } catch (Exception ex) {
+     * ex.printStackTrace();
+     * System.out.println("Error loading settings.fxml: " + ex.getMessage());
+     * return; // Exit if there's an error
+     * } }
+     */
 
-
-/*     public void Send(ActionEvent e){
-        System.out.println("Send button clicked!");
-        String name = NameTextArea.getText();
-        System.out.println("Name entered: " + name);
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/settings.fxml"));
+    public void switchToSettingsScene(MouseEvent event) {
+        System.out.println("Switching to settings scene...");
         try {
-            root = loader.load();
-            SettingsController settingsController = loader.getController();
-            settingsController.displayName(name);
-            primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            if (mainSceneCache == null) {
+                mainSceneCache = ((Node) event.getSource()).getScene();
+            }
+
+            root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
+            primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Error loading settings.fxml: " + ex.getMessage());
-            return; // Exit if there's an error
-        }     }*/
-    
-
-
-public void switchToSettingsScene(MouseEvent event) {
-    System.out.println("Switching to settings scene...");
-    try {
-        if (mainSceneCache == null) {
-            mainSceneCache = ((Node) event.getSource()).getScene();
-        }
-        
-        root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
-        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-}
+    }
 }
