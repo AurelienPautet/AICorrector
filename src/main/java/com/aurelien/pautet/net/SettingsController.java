@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.TextField;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,7 +38,10 @@ public class SettingsController {
     @FXML
     private TextField ModelTextField;
 
-    private void create_prompt_card(String promptName ,  String promptText) {
+    @FXML
+    private TextArea MasterPromptTextArea;
+
+    private void create_prompt_card(String promptName, String promptText) {
         Pane cardPane = new Pane();
         cardPane.setMinHeight(50);
         cardPane.setPrefWidth(950);
@@ -73,7 +77,7 @@ public class SettingsController {
         }
     }
 
-    public void add_new_card_button(){
+    public void add_new_card_button() {
         Button addButton = new Button("Add New Prompt");
         addButton.setPrefWidth(250);
         HBox buttonBox = new HBox(addButton);
@@ -91,18 +95,18 @@ public class SettingsController {
     public void savePrompts(MouseEvent event) {
         textSaveManager.ereaseText();
         for (Node node : PromptsVBox.getChildren()) {
-                Pane cardPane = (Pane) node;
-                if (cardPane.getChildren().get(0) instanceof HBox) {
-                    HBox hbox = (HBox) cardPane.getChildren().get(0);
-                        TextField leftField = (TextField) hbox.getChildren().get(0);
-                        TextField rightField = (TextField) hbox.getChildren().get(2);
-                        String key = leftField.getText();
-                        String value = rightField.getText();
-                        textSaveManager.addText(key, value);
-                    }
+            Pane cardPane = (Pane) node;
+            if (cardPane.getChildren().get(0) instanceof HBox) {
+                HBox hbox = (HBox) cardPane.getChildren().get(0);
+                TextField leftField = (TextField) hbox.getChildren().get(0);
+                TextField rightField = (TextField) hbox.getChildren().get(2);
+                String key = leftField.getText();
+                String value = rightField.getText();
+                textSaveManager.addText(key, value);
+            }
 
-            
         }
+        TextSaveManager.updateMasterPrompt(MasterPromptTextArea.getText());
         textSaveManager.updateModelName(ModelTextField.getText());
         textSaveManager.readFile();
         switchToMainScene(event);
@@ -115,15 +119,16 @@ public class SettingsController {
             Scene mainScene = MainController.getMainSceneCache();
             primaryStage.setScene(mainScene);
             primaryStage.show();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     public void initialize() {
         ModelTextField.setText(TextSaveManager.ModelName);
+        MasterPromptTextArea.setText(TextSaveManager.MasterPrompt);
         for (String key : TextSaveManager.textMap.keySet()) {
             String promptText = TextSaveManager.textMap.get(key);
             create_prompt_card(key, promptText);

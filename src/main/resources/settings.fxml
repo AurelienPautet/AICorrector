@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aurelien.pautet.net.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aurelien.pautet.net.SettingsController">
    <children>
       <Label fx:id="title_label" layoutX="50.0" layoutY="17.0" prefHeight="59.0" prefWidth="175.0" text="Settings" textAlignment="CENTER">
          <font>
@@ -27,7 +28,7 @@
             <Image url="@CROSS.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="PromptsScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="36.0" layoutY="161.0" prefHeight="200.0" prefWidth="987.0" vbarPolicy="ALWAYS">
+      <ScrollPane fx:id="PromptsScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="36.0" layoutY="270.0" prefHeight="200.0" prefWidth="987.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                <children>
@@ -40,5 +41,7 @@
       <Label layoutX="36.0" layoutY="103.0" text="Model Name : " />
       <Label layoutX="556.0" layoutY="103.0" text="see : " />
       <Hyperlink layoutX="597.0" layoutY="99.0" text="https://ai.google.dev/gemini-api/docs/models?hl=fr" />
+      <Label layoutX="29.0" layoutY="185.0" prefHeight="27.0" prefWidth="132.0" text="Master Promt :" />
+      <TextArea fx:id="MasterPromptTextArea" layoutX="155.0" layoutY="144.0" prefHeight="108.0" prefWidth="671.0" />
    </children>
 </AnchorPane>
